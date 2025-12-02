@@ -3,7 +3,6 @@ import fs from "fs";
 const input = fs.readFileSync("./02/input.txt").toString();
 
 class Chunk {
-  protected isInvalid: false;
   constructor(protected min: number, protected max: number) {
     //
   }
@@ -18,17 +17,21 @@ class Chunk {
     const buffer = [];
 
     for (let i = this.min; i <= this.max; i++) {
-      const halfDigits = this.getNumberOfDigits(i) / 2;
-
-      const left = i.toString().slice(0, halfDigits);
-      const right = i.toString().slice(halfDigits);
-
-      if (left === right) {
-        buffer.push(Number(left + right));
+      if (this.isInvalid(i)) {
+        buffer.push(i);
       }
     }
 
     return buffer;
+  }
+
+  protected isInvalid(n: number): boolean {
+    const halfDigits = this.getNumberOfDigits(n) / 2;
+
+    const left = n.toString().slice(0, halfDigits);
+    const right = n.toString().slice(halfDigits);
+
+    return left === right;
   }
 
   protected getNumberOfDigits(n: number): number {
