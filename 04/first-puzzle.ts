@@ -54,8 +54,6 @@ class Grid {
     this.height = lines.length;
 
     this.generateMap(lines);
-
-    console.log(this.getCell({ x: 0, y: 0 }));
   }
 
   public getNumberOfFreeForklifts(): number {
