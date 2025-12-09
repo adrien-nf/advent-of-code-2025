@@ -50,8 +50,6 @@ class Manifold {
 
   protected gridSize: number;
 
-  protected beams: Set<number> = new Set();
-
   protected splitters = new Map<string, Splitter>();
 
   constructor(protected lines: string[]) {
@@ -72,8 +70,6 @@ class Manifold {
 
   protected calculateAllPossibleSplits(): void {
     const startingPosition = this.findStartingPosition(this.lines.shift());
-
-    this.beams = new Set([startingPosition]);
 
     while (this.exploreLine(this.lines.shift()));
   }
