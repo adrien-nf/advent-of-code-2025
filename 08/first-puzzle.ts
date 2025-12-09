@@ -101,7 +101,7 @@ class ElectricalGrid {
     return this.circuits;
   }
 
-  protected generateBoxes(lines): JunctionBox[] {
+  protected generateBoxes(lines: string[]): JunctionBox[] {
     return lines.map((line) => {
       const [x, y, z] = line.split(",").map(Number);
 
@@ -130,18 +130,18 @@ class ElectricalGrid {
 
     const circuits: Circuit[] = [];
 
-    toAttachToCircuit.forEach((connection) => {
-      const fromCircuit = connection.getFrom().getCircuit();
-      const toCircuit = connection.getTo().getCircuit();
+    toAttachToCircuit.forEach((distance) => {
+      const fromCircuit = distance.getFrom().getCircuit();
+      const toCircuit = distance.getTo().getCircuit();
 
       if (!fromCircuit && !toCircuit) {
-        const circuit = new Circuit(connection.getFrom(), connection.getTo());
+        const circuit = new Circuit(distance.getFrom(), distance.getTo());
 
         circuits.push(circuit);
       } else if (fromCircuit && !toCircuit) {
-        fromCircuit.attach(connection.getTo());
+        fromCircuit.attach(distance.getTo());
       } else if (toCircuit && !fromCircuit) {
-        toCircuit.attach(connection.getFrom());
+        toCircuit.attach(distance.getFrom());
       } else if (fromCircuit && toCircuit) {
         if (fromCircuit === toCircuit) return;
 
